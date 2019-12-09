@@ -5,7 +5,7 @@ from PIL import Image
 from PIL import ImageChops
 
 
-keys = ('q','e','r','f','x','c','v','mouse4','mouse5')
+keys = ('q','e','r','f','c','v','b','mouse4','mouse5')
 opacity = 0.5
 offset = (1,1)
 
@@ -28,34 +28,24 @@ def set_image_brightness(img, multiplier):
             img.putpixel(pos, set_pixel_level(img.getpixel(pos), multiplier))
 
 
-def construct_binds(keys, opacity=1):
-    spacing = 18  #spacing between inventory slots
+def construct_binds(keys, opacity=1, spacing=18):
     keys_enum = enumerate(keys)
     width = len(keys) * spacing
     background = Image.new('RGBA', (width, 7))  #char height
 
     for n, key in keys_enum:
-        img = Image.open(f'data/keys/{key.lower()}.png')
-        background.paste(img, (n * spacing, 0))
+        pos = n * spacing, 0
+        key_img = Image.open(f'keys/{key.lower()}.png')
+        background.paste(key_img, pos)
 
     set_image_brightness(background, opacity)
     return background
 
 
-def overlay_binds(binds, offset=(0,0)):
-    offset_x, offset_y = offset
-
-    with open('config.csv', 'r') as csvfile:
-        reader = csv.reader(csvfile)
-
-        for line in reader:
-            filename, x, y = line
-            pos = (int(x) + offset_x, int(y) + offset_y)
-            gui = Image.open(f'data/{filename}').convert(mode='RGBA')
-            overlay = Image.new('RGBA', gui.size)
-            overlay.paste(binds, pos)
-            output = ImageChops.screen(gui, overlay)
-            save_img(output, filename)
+def overlay_binds(gui, binds, position):
+    overlay = Image.new('RGBA', gui.size)
+    overlay.paste(binds, position)
+    return ImageChops.screen(gui, overlay)
 
 
 def save_img(img, dest):
@@ -65,5 +55,13 @@ def save_img(img, dest):
     img.save(dest)
 
 
-#binds_img = construct_binds(keys, opacity=opacity)
-overlay_binds(construct_binds(keys, opacity=opacity), offset=offset)
+with open('offsets.csv', 'r') as csvfile:
+    reader = csv.reader(csvfile)
+
+    for filename, x, y, spacing in reader:
+        offset_x, offset_y = offset
+        position = (int(x) + offset_x, int(y) + offset_y)
+        gui = Image.open(f'pack/{filename}').convert(mode='RGBA')
+        binds = construct_binds(keys, opacity=opacity, spacing=int(spacing))
+        new_gui = overlay_binds(gui, binds, position)
+        save_img(new_gui, filename)
