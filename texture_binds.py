@@ -14,12 +14,13 @@ opacity = 0.5
 offset = (1,1)
 
 
-def crop_char(p):
+def get_crop(p):
     return p[0], p[1], p[0]+5, p[1]+7
 
 
 def get_map(file):
     d = {}
+
     with open(file, 'r') as f:
         for line in f:
             line = line.rstrip('\n').split(' ')
@@ -39,35 +40,31 @@ def get_assets(filelist, jarpath):
     return d
 
 
-def get_charset(sheet, charmap):
-    d = {}
-    char_sheet = sheet.copy().convert('1')
+def get_charset(sheet):
+    a = []
+    sheet = sheet.copy().convert('1')
 
-    for char in charmap:
-        pos = int(charmap[char][0]), int(charmap[char][1])
-        crop = crop_char(pos)
-        charimg = char_sheet.copy().crop(crop)
-        d[char] = charimg
+    for y in range(int(128/8)):
+        for x in range(int(128/8)):
+            pos = x*8, y*8
+            char = sheet.copy().crop(get_crop(pos))
+            a.append(char)
 
-    return d
-
-
-def make_key(key, charset):
-    key_img = Image.new('1', (len(key)*6-1, 7))
-
-    for n, char in enumerate(key):
-        key_img.paste(charset[char], (n*6,0))
-
-    return key_img
+    return a
 
 
 def get_keys(keybinds, charset):
-    d = []
+    a = []
 
     for key in keybinds:
-        d.append(make_key(key, charset))
+        key_img = Image.new('1', (len(key)*6-1, 7))
 
-    return d
+        for n, char in enumerate(key):
+            key_img.paste(charset[ord(char)], (n*6,0))  #ord() is sick!
+
+        a.append(key_img.copy())
+
+    return a
 
 
 def overlay_binds(gui, keylist, position, spacing, opacity):
@@ -83,12 +80,13 @@ def overlay_binds(gui, keylist, position, spacing, opacity):
 
 def save_img(img, dest):
     folder = os.path.split(dest)[0]
+
     if not os.path.isdir(folder):
         os.makedirs(folder, exist_ok=True)
+
     img.save(dest)
 
 
-charmap = get_map('charactermap')
 guimap = get_map('guimap')
 
 filelist = [f for f in guimap]
@@ -98,7 +96,7 @@ assets = get_assets(filelist, minecraftjar)
 
 ascii_png = assets['assets/minecraft/textures/font/ascii.png']
 
-charset = get_charset(ascii_png, charmap)
+charset = get_charset(ascii_png)
 
 keylist = get_keys(keybinds, charset)
 
