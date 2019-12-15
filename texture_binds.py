@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import csv
+import argparse
 import logging
 import os
 import zipfile
@@ -9,19 +9,16 @@ from PIL import ImageEnhance
 
 
 minecraftjar = os.path.expanduser('~/.minecraft/versions/1.15/1.15.jar')
-keybinds = ('Q','E','R','F','C','V','B','m4','m5')
-opacity = 0.5
-offset = (1,1)
 
 
 def get_crop(p):
     return p[0], p[1], p[0]+5, p[1]+7
 
 
-def get_map(file):
+def get_guimap():
     d = {}
 
-    with open(file, 'r') as f:
+    with open('guimap', 'r') as f:
         for line in f:
             line = line.rstrip('\n').split(' ')
             d[line[0]] = line[1:]
@@ -44,8 +41,8 @@ def get_charset(sheet):
     a = []
     sheet = sheet.copy().convert('1')
 
-    for y in range(int(128/8)):
-        for x in range(int(128/8)):
+    for y in range(int(sheet.size[0]/8)):
+        for x in range(int(sheet.size[1]/8)):
             pos = x*8, y*8
             char = sheet.copy().crop(get_crop(pos))
             a.append(char)
@@ -87,23 +84,36 @@ def save_img(img, dest):
     img.save(dest)
 
 
-guimap = get_map('guimap')
+parser = argparse.ArgumentParser()
+parser.add_argument('keys', nargs=9, type=str)
+parser.add_argument('--opacity', '-o',
+                    nargs='?',
+                    type=float,
+                    #action='store',
+                    default=1)
+parser.add_argument('--offset', '-f',
+                    nargs=2,
+                    type=int,
+                    default=[1, 1])
+args = parser.parse_args()
 
+
+guimap = get_guimap()
 filelist = [f for f in guimap]
 filelist.append('assets/minecraft/textures/font/ascii.png')
-
 assets = get_assets(filelist, minecraftjar)
-
 ascii_png = assets['assets/minecraft/textures/font/ascii.png']
-
 charset = get_charset(ascii_png)
-
-keylist = get_keys(keybinds, charset)
+keylist = get_keys(args.keys, charset)
 
 for asset in guimap:
-    x = int(guimap[asset][0]) + offset[0]
-    y = int(guimap[asset][1]) + offset[1]
+    x = int(guimap[asset][0]) + args.offset[0]
+    y = int(guimap[asset][1]) + args.offset[1]
     position = x, y
     spacing = int(guimap[asset][2])
-    new = overlay_binds(assets[asset], keylist, position, spacing, opacity)
+    new = overlay_binds(assets[asset],
+                        keylist,
+                        position,
+                        spacing,
+                        args.opacity)
     save_img(new, asset)
