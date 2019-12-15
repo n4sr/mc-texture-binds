@@ -8,8 +8,6 @@ from PIL import ImageChops
 from PIL import ImageEnhance
 
 
-logging.getLogger().setLevel('DEBUG')
-
 minecraftjar = os.path.expanduser('~/.minecraft/versions/1.15/1.15.jar')
 keybinds = ('Q','E','R','F','C','V','B','m4','m5')
 opacity = 0.5
