@@ -104,24 +104,34 @@ def run(keybinds, opacity, offset, version):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('keys', nargs=9, type=str)
 parser.add_argument(
-    '--opacity', '-o',
-    nargs='?',
-    type=float,
-    default=1
+    'keys',
+    nargs=9,
+    type=str,
+    metavar='KEY'
 )
 parser.add_argument(
-    '--offset', '-f',
+    '--opacity',
+    nargs=1,
+    type=float,
+    default=1,
+    help='set the opacity of the labels',
+    metavar='float'
+)
+parser.add_argument(
+    '--offset',
     nargs=2,
     type=int,
-    default=[1, 1]
+    default=[1,1],
+    help='how offset the labels are from the corner',
+    metavar='int'
 )
 parser.add_argument(
-    '--version', '-v',
+    '--version',
     nargs=1,
     type=str,
-    default='1.15.1'
+    default='1.15.1',
+    metavar='MINECRAFT_VERSION'
 )
 args = parser.parse_args()
 
