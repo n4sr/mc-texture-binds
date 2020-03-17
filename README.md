@@ -1,24 +1,30 @@
 # mc-texture-binds
-`texture-binds` is a script for overlaying keybinds onto the various 
-inventory textures in Minecraft. This could be useful for players who have 
-non-standard keybinds for their hotbar. Just clone the repo folder into 
-your `.minecraft/resourcepacks/` folder and run the script.
+`texture-binds` is a script that generates a resourcepack which
+overlays your onto the various inventory textures in Minecraft. This
+could be useful for players who have non-standard keybinds for their
+hotbar. Just clone the repo folder into your
+`.minecraft/resourcepacks/` folder and run the script.
 
 ![](screenshots/example1.png)
 
-
 # Usage
 ```
-usage: __main__.py [-h]
-                   [-f options.txt | -k KEYS KEYS KEYS KEYS KEYS KEYS KEYS KEYS KEYS]
-                   [--offset int int] [--opacity float]
-                   jar
+usage: texture-binds [-h] [--offset x y] [--opacity float]
+                     minecraft.jar options.txt
 
+positional arguments:
+  minecraft.jar
+  options.txt
+
+optional arguments:
+  -h, --help       show this help message and exit
+  --offset x y
+  --opacity float
 ```
-An example:
 ```
-$ python3 -m texture-binds -f ~/.minecraft/options.txt --offset 1 1 --opacity 0.5 ~/.minecraft/version/1.15.1/1.15.1.jar
+$ python3 -m texture-binds --offset 1 1 --opacity .5 ~/.minecraft/versions/1.15.1/1.15.1.jar ~/.minecraft/options.txt
 ```
+
 # Requirements
-* Python>=3.6
+* Python 3.6 or greater
 * [Pillow](https://python-pillow.org/) from `pip`
