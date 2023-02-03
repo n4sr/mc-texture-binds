@@ -27,8 +27,8 @@ def main():
         '--offset',
         nargs=2,
         type=int,
-        metavar=('x','y'),
-        default=[1,1],
+        metavar=('x', 'y'),
+        default=[1, 1],
     )
     parser.add_argument(
         '--opacity',
@@ -49,6 +49,11 @@ def main():
         gui = get_asset(args.jar, asset)
         x1, y1, spacing = guimap[asset]
         gui = overlay(gui, keys, x1+x2, y1+y2, spacing, args.opacity)
+        path = pathlib.Path(asset)
+
+        if not path.parent.exists():
+            path.parent.mkdir(parents=True)
+
         gui.save(asset)
 
 
@@ -94,14 +99,15 @@ class Key:
         Returns the coordinates of the key on the ascii sprite sheet.
         '''
         k = ord(char)
-        x = k %  16 * 8
+        x = k % 16 * 8
         y = k // 16 * 8
         return x, y, x+5, y+8
 
     def _get_keystring(self):
         '''Returns a string of the key formatted for the hotbar.'''
         s = str()
-        if not self.device == 'keyboard': s += self.device[0]
+        if not self.device == 'keyboard':
+            s += self.device[0]
         s += self.key
         return s
 
