@@ -1,0 +1,140 @@
+[
+    {
+        "path": "assets/minecraft/textures/gui/widgets.png",
+        "spacing": 20,
+        "x": 3,
+        "y": 3
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/anvil.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/beacon.png",
+        "spacing": 18,
+        "x": 36,
+        "y": 195
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/blast_furnace.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/brewing_stand.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/cartography_table.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/crafting_table.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/dispenser.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/enchanting_table.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/furnace.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/generic_54.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 198
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/grindstone.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/hopper.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 109
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/horse.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/inventory.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/loom.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/shulker_box.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/smoker.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/stonecutter.png",
+        "spacing": 18,
+        "x": 8,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/villager2.png",
+        "spacing": 18,
+        "x": 108,
+        "y": 142
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/creative_inventory/tab_inventory.png",
+        "spacing": 18,
+        "x": 9,
+        "y": 112
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/creative_inventory/tab_item_search.png",
+        "spacing": 18,
+        "x": 9,
+        "y": 112
+    },
+    {
+        "path": "assets/minecraft/textures/gui/container/creative_inventory/tab_items.png",
+        "spacing": 18,
+        "x": 9,
+        "y": 112
+    }
+]
