@@ -8,8 +8,7 @@ hotbar.
 
 # Usage
 ```
-usage: texture-binds.py [-h] [--offset x y] [--opacity float]
-                     /.minecraft
+usage: texture-binds.py [-h] [--offset x y] [--opacity float] /.minecraft
 
 positional arguments:
   .minecraft directory
