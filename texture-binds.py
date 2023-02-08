@@ -5,7 +5,7 @@ import pathlib
 import re
 import zipfile
 import io
-from string import ascii_letters, digits
+from string import printable as printable_characters
 
 from packaging.version import parse as ParseVersion
 from packaging.version import Version
@@ -28,7 +28,7 @@ class HotBar:
         if not len(key) in range(1, 3):
             raise ValueError
         for char in key:
-            if not char in ascii_letters + digits:
+            if not char in printable_characters:
                 raise ValueError
         self.slots[slot] = key
 
@@ -84,6 +84,7 @@ RESOURCEPACK_PATH = args.path.joinpath('resourcepacks/texture-binds.zip')
 if not RESOURCEPACK_PATH.parent.is_dir():
     raise NotADirectoryError(RESOURCEPACK_PATH)
 
+
 # find all the jar files in versions, compare them, and use
 # the latest version. this will likely break with snapshot jars.
 # TODO: add exceptions for snapshot versions.
@@ -127,13 +128,15 @@ with OPTIONS_PATH.open('r') as f:
 # render slightly lower than the others, so 5x8 is used.
 ASCII_SPRITES = {}
 sheet = Image.open(ASCII_PNG)
-for char in ascii_letters + digits:
+for char in printable_characters:
+    # TODO: add mouse buttons to list
     n = ord(char)
     x1 = (n % 16) * 8
     y1 = (n // 16) * 8
     x2 = x1 + 5
     y2 = y1 + 8
     ASCII_SPRITES[char] = sheet.copy().crop((x1, y1, x2, y2))
+
 
 RESOURCEPACK_ZIP = io.BytesIO()
 with zipfile.ZipFile(RESOURCEPACK_ZIP, 'w') as zip:
@@ -155,6 +158,7 @@ with zipfile.ZipFile(RESOURCEPACK_ZIP, 'w') as zip:
 
         with zip.open(asset.path, 'w') as f:
             f.write(modified_asset.getvalue())
+
 
 with RESOURCEPACK_PATH.open('wb') as f:
     f.write(RESOURCEPACK_ZIP.getvalue())
